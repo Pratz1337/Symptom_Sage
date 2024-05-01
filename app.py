@@ -380,6 +380,7 @@ def remove_patient():
         return redirect(url_for('doctor_dashboard'))
 
     return render_template('remove_patient.html')
+@app.route('/analyse', methods=['GET', 'POST'])
 def analyse():
     if request.method == 'POST':
         image_file = request.files['image_file']
