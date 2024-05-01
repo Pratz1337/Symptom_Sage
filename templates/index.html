@@ -10,19 +10,6 @@
     <link rel="stylesheet" href="/static/assets/css/DA_About.css">
     <link rel="stylesheet" href="/static/assets/css/Navbar-Right-Links-Dark-icons.css">
     <link rel="icon" href="/static/css/image.png">
-    <style>
-        df-messenger {
-          z-index: 999;
-          position: fixed;
-          --df-messenger-font-color: #000;
-          --df-messenger-font-family: Google Sans;
-          --df-messenger-chat-background: #f3f6fc;
-          --df-messenger-message-user-background: #d3e3fd;
-          --df-messenger-message-bot-background: #fff;
-          bottom: 16px;
-          right: 16px;
-        }
-      </style>
 </head>
 
 <body>
@@ -73,6 +60,10 @@
         Welcome to our web application for pneumonia detection based on X-rays! We are dedicated to providing an efficient and reliable platform for early diagnosis and comprehensive reporting of pneumonia cases. <br>
         Symptomsage leverages advanced CNN models to revolutionize pneumonia diagnosis, offering cutting-edge healthcare solutions. Explore the technical journey behind our Flask-based UI.
 </p>
+<p class="mb-4 text-center" style="font-size:large;">
+    We are team Snack-Overflow a group of young developers who try to build innovative solutions to the problems you face in the existing
+    healthcare field. With our knowledge of the problem and the skills we possess we develop innovative and sustainable solutions. 
+</p>
     <div class="text-center my-3"><a class="btn btn-primary btn-lg text-center me-2" role="button" href="/documentation" target="_blank">Read More</a></div>
 </div>
     </div>
@@ -92,5 +83,17 @@
    chat-title="AskSage">
   </df-messenger-chat-bubble>
 </df-messenger>
-
+<style>
+  df-messenger {
+    z-index: 999;
+    position: absolute;
+    --df-messenger-font-color: #000;
+    --df-messenger-font-family: Google Sans;
+    --df-messenger-chat-background: #f3f6fc;
+    --df-messenger-message-user-background: #d3e3fd;
+    --df-messenger-message-bot-background: #fff;
+    bottom: 16px;
+    right: 16px;
+  }
+</style>
 </html>
