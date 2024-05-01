@@ -4,8 +4,8 @@
   <title>Patient Dashboard</title>
   <style>
     body {
-      font-family: Arial, sans-serif; 
-      margin: 20px; 
+      font-family: Arial, sans-serif;
+      margin: 20px;
     }
 
     h1 {
@@ -19,13 +19,13 @@
     }
 
     .patient-info {
-      border: 1px solid #ddd; 
+      border: 1px solid #ddd;
       padding: 10px;
-      margin-bottom: 20px; 
+      margin-bottom: 20px;
     }
 
     .patient-info p {
-      margin-bottom: 5px; 
+      margin-bottom: 5px;
     }
 
     table {
@@ -51,6 +51,9 @@
       border-radius: 3px;
       cursor: pointer;
     }
+    .scan-image {
+      max-width: 300px;
+    }
   </style>
 </head>
 <body>
@@ -73,7 +76,7 @@
   <h2>Scan History</h2>
   <table>
     <tr>
-      <th>Scan Path</th>
+      <th>Scan Image</th>
       <th>Result</th>
       <th>Detailed Report</th>
       <th>Prescription</th>
@@ -81,7 +84,7 @@
     <tr>
       <td>
         {% if patient[3] %}
-          {{ patient[3] }}
+          <img src="{{ url_for('uploaded_file', filename=patient[3]) }}" alt="Scan Image" class="scan-image">
         {% else %}
           N/A
         {% endif %}
