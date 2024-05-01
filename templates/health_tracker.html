@@ -53,6 +53,9 @@
     .bold-p {
       font-weight: bold;
     }
+    .scan-image {
+      max-width: 300px;
+    }
   </style>
    <link rel="icon" href="/static/css/image.png">
 </head>
@@ -62,12 +65,18 @@
   <h2>Scan History</h2>
   <table>
     <tr>
-      <th>Scan Path</th>
+      <th>Scan Image</th>
       <th>Prescription</th>
     </tr>
     {% for data in patient_data %}
       <tr>
-        <td>{{ data[0] }}</td>
+        <td>
+          {% if data[0] %}
+            <img src="{{ url_for('uploaded_file', filename=data[0]) }}" alt="Scan Image" class="scan-image">
+          {% else %}
+            N/A
+          {% endif %}
+        </td>
         <td>{{ data[1] }}</td>
       </tr>
     {% endfor %}
@@ -76,7 +85,9 @@
   <h2>Medication Tracker</h2>
   <form method="post">
     {% for data in patient_data %}
-      <h3>Scan Path: {{ data[0] }}</h3>
+      <h3>
+        Check the box once you have taken the particular medicine
+      </h3>
       <p>Prescription:</p>
       <div>
         {% for medicine in data[1].split(', ') %}

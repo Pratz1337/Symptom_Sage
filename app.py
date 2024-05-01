@@ -387,25 +387,17 @@ def analyse():
         image_filename = image_file.filename
         image_path = os.path.join('uploads', image_filename)
         image_file.save(os.path.join(app.config['UPLOAD_FOLDER'], image_filename))
-
-        model_path = r'C:\Users\sayal\OneDrive\Desktop\SymptomSage\src\Pneumonia_model.keras'
-        #detector = PneumoniaDetector(model_path, os.path.join(app.config['UPLOAD_FOLDER'], image_filename))
-        #prediction = detector.predict()
-
-        #generated_report = generate(os.path.join(app.config['UPLOAD_FOLDER'], image_filename))
+        preview_url = url_for('uploaded_file', filename=image_filename)
+        model_path = r'Pneumonia_model.keras'
+        detector = PneumoniaDetector(model_path, os.path.join(app.config['UPLOAD_FOLDER'], image_filename))
+        prediction = detector.predict()
+        generated_report = generate(os.path.join(app.config['UPLOAD_FOLDER'], image_filename))
         generated_report=generated_report.replace('**','')
         report_path = os.path.join(app.config['UPLOAD_FOLDER'], f"{image_filename.split('.')[0]}_report.txt")
         with open(report_path, "w") as f:
             f.write(generated_report)
-
-        patient_name = "John Doe"
-        scan_dates = ["2023-04-01", "2023-06-15", "2023-09-20", "2024-01-10", "2024-03-28"]
-        
-
-        #return render_template('analyse.html', prediction=prediction, generated_report=generated_report, image_path=image_path, patient_name=patient_name, scan_dates=scan_dates)
-
+        return render_template('analyse.html', prediction=prediction, generated_report=generated_report, image_path=image_path)
     return render_template('analyse.html')
-
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
