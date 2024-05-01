@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Health Tracker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    h1, h2, h3 {
+      margin-top: 20px;
+    }
+
+    form {
+      margin-top: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    input[type="submit"] {
+      margin-top: 10px;
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    p {
+      margin-top: 20px;
+    }
+
+    .bold-p {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Health Tracker</h1>
+
+  <h2>Scan History</h2>
+  <table>
+    <tr>
+      <th>Scan Path</th>
+      <th>Prescription</th>
+    </tr>
+    {% for data in patient_data %}
+      <tr>
+        <td>{{ data[0] }}</td>
+        <td>{{ data[1] }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+
+  <h2>Medication Tracker</h2>
+  <form method="post">
+    {% for data in patient_data %}
+      <h3>Scan Path: {{ data[0] }}</h3>
+      <p>Prescription:</p>
+      <div>
+        {% for medicine in data[1].split(', ') %}
+          <label>
+            <input type="checkbox" name="{{ medicine }}"> {{ medicine }}
+          </label>
+        {% endfor %}
+      </div>
+    {% endfor %}
+    <input type="submit" value="Submit">
+  </form>
+
+  {% if message %}
+    <p class="bold-p">{{ message }}</p>
+  {% endif %}
+</body>
+</html>

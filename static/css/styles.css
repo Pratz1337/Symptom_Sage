@@ -1,0 +1,78 @@
+/* Dark Mode Styles */
+body {
+    background: hsla(207, 90%, 41%, 1);
+
+background: linear-gradient(180deg, hsla(207, 90%, 41%, 1) 0%, hsla(186, 67%, 48%, 1) 100%);
+
+background: -moz-linear-gradient(180deg, hsla(207, 90%, 41%, 1) 0%, hsla(186, 67%, 48%, 1) 100%);
+
+background: -webkit-linear-gradient(180deg, hsla(207, 90%, 41%, 1) 0%, hsla(186, 67%, 48%, 1) 100%);
+
+filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#0A72C7", endColorstr="#28BBCB", GradientType=1 );
+    background-repeat: no-repeat; /* Prevents the gradient from repeating */
+    background-size:2000px 3000px; 
+}
+
+.jumbotron {
+    background-color: #2b2b2b !important;
+    color: #fff;
+}
+
+.btn-primary {
+    background-color: #2b2b2b !important;
+    border-color: #2b2b2b !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #2b2b2b !important;
+    border-color: #2b2b2b !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+.card {
+    background-color: #2b2b2b;
+    color: #f5f5f5;
+    border-color: #3b3b3b;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+}
+
+.card-title {
+    color: #fff;
+    font-weight: 600;
+}
+
+.list-group-item {
+    background-color: #2b2b2b;
+    border-color: #3b3b3b;
+    color: #f5f5f5;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.jumbotron {
+    background-image: linear-gradient(to right, #2b2b2b, #2b2b2b);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.custom-file-input {
+    cursor: pointer;
+}
+
+.custom-file-label {
+    cursor: pointer;
+}
+
+#uploaded-image-preview {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}

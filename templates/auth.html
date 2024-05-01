@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login Page</title>
+  <style>
+    body {
+      background-image: url(''); 
+      background-size: cover;
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      animation: background-fade 5s ease-in-out infinite alternate;
+    }
+
+    @keyframes background-fade {
+      from { opacity: 0.8; }
+      to { opacity: 1; }
+    }
+
+    .button-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 10px; /* Gap between buttons */
+      animation: button-bounce 1s ease-in-out infinite alternate;
+    }
+
+    @keyframes button-bounce {
+      from { transform: translateY(0px); }
+      to { transform: translateY(-5px); }
+    }
+
+    button {
+      background-color: #4CAF50; 
+      color: white;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+    }
+
+    button:hover {
+      transform: scale(1.02); 
+      background-color: #3e8e41; 
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome </h1>
+  <div class="button-container">
+    <a href="{{ url_for('patient_login') }}">
+      <button type="button">Patient Login</button>
+    </a>
+    <a href="{{ url_for('doctor_login') }}">
+      <button type="button">Doctor Login</button>
+    </a>
+    <a href="{{ url_for('patient_signup') }}">
+      <button type="button">Patient Signup</button>
+    </a>
+    <a href="{{ url_for('doctor_signup') }}">
+      <button type="button">Doctor Signup</button>
+    </a>
+  </div>
+</body>
+</html>

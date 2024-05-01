@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Doctor Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      margin-top: 15px; 
+    }
+
+    .patient-list {
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+
+    .patient-list h3 {
+      margin-top: 0; 
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    .scan-image {
+      max-width: 300px; 
+    }
+
+    #add {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+
+    #remove {
+      background-color: rgb(218, 73, 73);
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Doctor Dashboard</h1>
+  <h2>Patients</h2>
+
+  {% if patient_reports %}
+    <div class="patient-list">
+      {% for name, reports in patient_reports.items() %}
+        <h3>{{ name }}</h3>
+        <table>
+          <tr>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>Scan Image</th>
+            <th>Result</th>
+            <th>Detailed Report</th>
+            <th>Prescription</th>
+          </tr>
+          {% for report in reports %}
+            <tr>
+              <td>{{ report[1] }}</td>
+              <td>{{ report[2] }}</td>
+              <td>
+                {% if report[3] %}
+                  <img src="{{ url_for('static', filename='uploads/' + report[3]) }}" alt="Scan Image" class="scan-image">
+                {% else %}
+                  N/A
+                {% endif %}
+              </td>
+              <td>
+                {% if report[4] %}
+                  {{ report[4] }}
+                {% else %}
+                  N/A
+                {% endif %}
+              </td>
+              <td>
+                {% if report[5] %}
+                  {{ report[5] }}
+                {% else %}
+                  N/A
+                {% endif %}
+              </td>
+              <td>
+                {% if report[6] %}
+                  {{ report[6] }}
+                {% else %}
+                  N/A
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </table>
+        <br>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>No patients found.</p>
+  {% endif %}
+  <br>
+  <a href="{{ url_for('add_patient') }}"><button type="button" id="add">Add Patient Details</button></a>
+  <br>
+  <a href="{{ url_for('remove_patient') }}"><button type="button" id="remove">Remove Patient</button></a>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Remove Patient</title>
+  <style>
+    
+    body {
+      font-family: Arial, sans-serif; 
+      margin: 20px; 
+    }
+
+    
+    form {
+      border: 1px solid #ddd; 
+      padding: 20px;
+      margin-bottom: 20px; 
+    }
+
+    form label {
+      display: block; 
+      margin-bottom: 5px; 
+    }
+
+    form input[type="text"] {
+      width: 100%; 
+      padding: 8px;
+      border: 1px solid #ccc; 
+      margin-bottom: 15px; 
+    }
+
+    form input[type="submit"] {
+      background-color: #f00; 
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Remove Patient</h1>
+  <form method="post">
+    <label for="patient_name">Patient Name:</label>
+    <input type="text" id="patient_name" name="patient_name" required><br>
+    <input type="submit" value="Remove Patient">
+  </form>
+</body>
+</html> 

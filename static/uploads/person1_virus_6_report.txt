@@ -1,0 +1,17 @@
+ FINDINGS:
+CHEST X-RAY
+
+Technique: PA and lateral views of the chest were obtained. 
+
+Indications: The patient is a neonate with respiratory distress. 
+
+Findings:
+- There is a large amount of fluid in the right lung. 
+- The heart is enlarged and the lungs are hyperinflated. 
+- There is a small amount of fluid in the left lung. 
+- The bones are normal.
+
+IMPRESSION:
+Pleural Effusion
+Cardiomegaly
+Pulmonary Edema

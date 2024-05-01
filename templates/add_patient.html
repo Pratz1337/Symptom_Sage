@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Patient</title>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          margin: 20px;
+        }
+    
+        h1 {
+          text-align: center;
+          font-size: 2em;
+          margin-bottom: 20px;
+        }
+    
+        label {
+          display: block;
+          margin-bottom: 5px;
+        }
+    
+        input[type="text"],
+        input[type="number"],
+        textarea {
+          width: 100%;
+          padding: 10px;
+          border: 1px solid #ccc;
+          border-radius: 3px;
+          box-sizing: border-box;
+          margin-bottom: 10px;
+        }
+    
+        input[type="radio"] {
+          margin-right: 5px;
+        }
+    
+        #image-preview {
+          max-width: 300px;
+          margin-bottom: 10px;
+        }
+    
+        #medicine_fields {
+          margin-bottom: 10px;
+        }
+        input[type="submit"]{
+            background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      margin-bottom: 10px;
+        }
+      </style>
+    <script>
+        function previewImage(event) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                var preview = document.getElementById('image-preview');
+                preview.src = reader.result;
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+</head>
+<body>
+    <h1>Add Patient</h1>
+    <form method="post" enctype="multipart/form-data">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br>
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required><br>
+        <label for="gender">Gender:</label><br>
+        <label for="male">Male</label>
+        <input type="radio" id="male" value="Male" name="gender" required><br>
+        <label for="female">Female</label>
+        <input type="radio" id="female" value="Female"  name="gender" required><br>
+        <label for="none">None</label>
+        <input type="radio" id="none" value="None"  name="gender" required><br>
+        <label for="scan_path">Scan Path:</label>
+        <input type="file" id="scan_path" name="scan_path" required oninput="previewImage(event)"><br>
+        <img id="image-preview" src="#" alt="Image Preview" style="max-width: 300px;"><br>
+        <label for="result">Result:</label>
+        <input type="text" id="result" name="result" required><br>
+        <label for="detailed_rep">Detailed Report:</label>
+        <textarea id="detailed_rep" name="detailed_rep" required></textarea><br>
+        <label for="num_medicines">Number of Medicines:</label>
+        <input type="number" id="num_medicines" name="num_medicines" required><br>
+
+        <div id="medicine_fields"></div>
+
+        <script>
+            document.getElementById('num_medicines').addEventListener('change', function() {
+                var numMedicines = parseInt(this.value);
+                var medicineFields = document.getElementById('medicine_fields');
+                medicineFields.innerHTML = '';
+
+                for (var i = 0; i < numMedicines; i++) {
+                    var label = document.createElement('label');
+                    label.setAttribute('for', 'medicine_' + i);
+                    label.textContent = 'Medicine ' + (i + 1) + ':';
+
+                    var input = document.createElement('input');
+                    input.setAttribute('type', 'text');
+                    input.setAttribute('id', 'medicine_' + i);
+                    input.setAttribute('name', 'medicine_' + i);
+                    input.setAttribute('required', 'required');
+
+                    var br = document.createElement('br');
+
+                    medicineFields.appendChild(label);
+                    medicineFields.appendChild(input);
+                    medicineFields.appendChild(br);
+                }
+            });
+        </script>
+        <input type="submit" value="Add Patient">
+    </form>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SymptomSage</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="icon" href="/static/css/image.png">
+</head>
+<body>
+    <div class="container">
+        <div class="jumbotron">
+            <h1 class="display-4 text-center">SymptomSage</h1>
+            <p class="lead text-center">Automated Pneumonia Diagnosis and Triage for Underserved Areas</p>
+        </div>
+
+        <form method="post" enctype="multipart/form-data" class="mb-5">
+            <dl>
+
+                <div class="form-row align-items-center">
+                    <div class="col-auto">
+                        <div class="form-group">
+                            <label for="image_file">Upload an X-Ray Image:</label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="image_file" name="image_file" onchange="previewImage(event)" required>
+                                <label class="custom-file-label" for="image_file">Choose file</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <br>
+                        <button type="submit" class="btn btn-primary align-self-start">Analyse</button>
+                    </div>
+                </div>
+            </form>
+        </dl>
+
+        {% if prediction %}
+            <div class="card mb-4 rounded-lg">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Pneumonia Detection Result</h5>
+                    <p class="card-text text-center">The image was detected as: {{ prediction }}</p>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if generated_report %}
+            <div class="card mb-4 rounded-lg">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Detailed Report</h5>
+                    <pre class="card-text" style="color: aliceblue; font-family: sans-serif;">{{ generated_report }}</pre>
+                </div>
+            </div>
+        {% endif %}
+        
+    <script>
+        function previewImage(event) {
+            var input = event.target;
+            var label = input.nextElementSibling;
+            var fileName = input.files[0].name;
+        
+            label.innerHTML = fileName;
+        }
+        </script>
+</body>
+</html>

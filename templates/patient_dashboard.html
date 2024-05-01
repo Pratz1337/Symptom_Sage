@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Patient Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif; 
+      margin: 20px; 
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      margin-top: 15px;
+    }
+
+    .patient-info {
+      border: 1px solid #ddd; 
+      padding: 10px;
+      margin-bottom: 20px; 
+    }
+
+    .patient-info p {
+      margin-bottom: 5px; 
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+    button{
+        margin-top: 10px;
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Patient Dashboard</h1>
+  <div class="patient-info">
+    <h2>Patient Info</h2>
+    <p>Name: {{ patient[0] }}</p>
+    <p>Age: {{ patient[1] }}</p>
+    <p>Gender: {{ patient[2] }}</p>
+  </div>
+
+  {% if patient[7] %}
+  <div class="patient-info">
+    <h2>Doctor Info</h2>
+    <p>Doctor: {{ patient[7] }}</p>
+    <p>Hospital: {{ patient[8] }}</p>
+  </div>
+  {% endif %}
+
+  <h2>Scan History</h2>
+  <table>
+    <tr>
+      <th>Scan Path</th>
+      <th>Result</th>
+      <th>Detailed Report</th>
+      <th>Prescription</th>
+    </tr>
+    <tr>
+      <td>
+        {% if patient[3] %}
+          {{ patient[3] }}
+        {% else %}
+          N/A
+        {% endif %}
+      </td>
+      <td>
+        {% if patient[4] %}
+          {{ patient[4] }}
+        {% else %}
+          N/A
+        {% endif %}
+      </td>
+      <td>
+        {% if patient[5] %}
+          {{ patient[5] }}
+        {% else %}
+          N/A
+        {% endif %}
+      </td>
+      <td>
+        {% if patient[6] %}
+          {{ patient[6] }}
+        {% else %}
+          N/A
+        {% endif %}
+      </td>
+    </tr>
+  </table>
+  <a href="{{ url_for('health_tracker') }}"><button type="button">Health Tracker</button></a>
+</body>
+</html>
