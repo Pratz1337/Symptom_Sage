@@ -2,27 +2,28 @@ from flask import Flask, render_template, redirect, url_for, request, session,se
 import mysql.connector
 import os
 from werkzeug.utils import secure_filename
-#import vertexai
-#from vertexai.generative_models import GenerativeModel, Part, FinishReason
-#import vertexai.preview.generative_models as generative_models
-#from PIL import Image
-#import io
-#import tensorflow as tf
-#from tensorflow.keras.models import load_model
-#import cv2
-#import numpy as np
+import vertexai
+from vertexai.generative_models import GenerativeModel, Part, FinishReason
+import vertexai.preview.generative_models as generative_models
+from PIL import Image
+import io
+import tensorflow as tf
+from tensorflow.keras.models import load_model
+import cv2
+import numpy as np
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
-
 UPLOAD_FOLDER = 'static/uploads/'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+upload_folder = os.path.join(app.root_path, app.config['UPLOAD_FOLDER'])
+os.makedirs(upload_folder, exist_ok=True)
 
 def get_db():
     db = mysql.connector.connect(
         host="localhost",
         user="root",
-        password="123",
+        password="kamal2005",
         database="symptomsage"
     )
     return db
@@ -51,69 +52,69 @@ def auth():
 @app.route('/documentation')
 def documentation():
     return render_template('documentation.html')
-#class PneumoniaDetector:
-   # def __init__(self, model_path, image_path):
-       # self.model_path = model_path
-        #self.image_path = image_path
-        #self.loaded_model = tf.keras.models.load_model(self.model_path)
+class PneumoniaDetector:
+    def __init__(self, model_path, image_path):
+        self.model_path = model_path
+        self.image_path = image_path
+        self.loaded_model = tf.keras.models.load_model(self.model_path)
 
-    #def predict(self):
-        #img = cv2.imread(self.image_path, cv2.IMREAD_GRAYSCALE)
-        #resized_img = cv2.resize(img, (150, 150))
-        #img_array = np.array(resized_img) / 255
-        #img_array = img_array.reshape(1, 150, 150, 1)
+    def predict(self):
+        img = cv2.imread(self.image_path, cv2.IMREAD_GRAYSCALE)
+        resized_img = cv2.resize(img, (150, 150))
+        img_array = np.array(resized_img) / 255
+        img_array = img_array.reshape(1, 150, 150, 1)
 
-        #predictions = self.loaded_model.predict(img_array)
-        #if predictions[0] > 0.5:
-            #return "PNEUMONIA"
-        #else:
-            #return "NORMAL"
+        predictions = self.loaded_model.predict(img_array)
+        if predictions[0] > 0.5:
+            return "PNEUMONIA"
+        else:
+            return "NORMAL"
 
-#def generate(image_path):
-    #vertexai.init(project="airy-gate-418807", location="asia-southeast1")
+def generate(image_path):
+    vertexai.init(project="airy-gate-418807", location="asia-southeast1")
     
-    #with open(image_path, "rb") as f:
-        #image = Image.open(f)
-        #image_data = io.BytesIO()
-        #image.save(image_data, format="PNG")
-        #image_data = image_data.getvalue()
+    with open(image_path, "rb") as f:
+        image = Image.open(f)
+        image_data = io.BytesIO()
+        image.save(image_data, format="PNG")
+        image_data = image_data.getvalue()
 
-    #model = GenerativeModel("gemini-1.0-pro-vision-001")
+    model = GenerativeModel("gemini-1.0-pro-vision-001")
     
-    #image_part = Part.from_data(
-        #mime_type="image/png",
-        #data=image_data,
-    #)
+    image_part = Part.from_data(
+        mime_type="image/png",
+        data=image_data,
+    )
 
-    #text_input = """WRITE 'THIS IS A DETAILED REPORT OF THE SCAN (MAY OR MAYNOT BE ACCURATE)' WRITE A VERY DETAILED REPORT OF THE X-RAY REPORT OF THE SCAN in english. GIVE THE OUTPUT IN THIS FORMAT : {'FINDINGS:'}
-    #explain in complete medical terms should contain 500 words explaining the compllete medical problem. NOTE--> if the provided image is not an X-Ray GIVE OUTPUT- NOT AN XRAY"""
+    text_input = """WRITE 'THIS IS A DETAILED REPORT OF THE SCAN (MAY OR MAYNOT BE ACCURATE)' WRITE A VERY DETAILED REPORT OF THE X-RAY REPORT OF THE SCAN in english. GIVE THE OUTPUT IN THIS FORMAT : {'FINDINGS:'}
+    explain in complete medical terms should contain 500 words explaining the compllete medical problem. NOTE--> if the provided image is not an X-Ray GIVE OUTPUT- NOT AN XRAY"""
 
-    #generation_config = {
-        #"temperature": 0.1218484,
-        #"top_p": 0.5,
-        #"top_k": 1,
-        #"max_output_tokens": 2048,
-    #}
+    generation_config = {
+        "temperature": 0.1218484,
+        "top_p": 0.5,
+        "top_k": 1,
+        "max_output_tokens": 2048,
+    }
 
-    #safety_settings = {
-        #generative_models.HarmCategory.HARM_CATEGORY_HATE_SPEECH: generative_models.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-        #generative_models.HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: generative_models.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-        #generative_models.HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: generative_models.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-        #generative_models.HarmCategory.HARM_CATEGORY_HARASSMENT: generative_models.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-    #}
+    safety_settings = {
+        generative_models.HarmCategory.HARM_CATEGORY_HATE_SPEECH: generative_models.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+        generative_models.HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: generative_models.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+        generative_models.HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: generative_models.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+        generative_models.HarmCategory.HARM_CATEGORY_HARASSMENT: generative_models.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+    }
 
-    #responses = model.generate_content(
-        #[image_part, text_input],
-        #generation_config=generation_config,
-        #safety_settings=safety_settings,
-        #stream=True,
-    #)
+    responses = model.generate_content(
+        [image_part, text_input],
+        generation_config=generation_config,
+        safety_settings=safety_settings,
+        stream=True,
+    )
 
-    #result = ""
-    #for response in responses:
-       # result += response.text
+    result = ""
+    for response in responses:
+        result += response.text
 
-    #return result
+    return result
 @app.route('/doctor_login', methods=['GET', 'POST'])
 def doctor_login():
     if request.method == 'POST':
@@ -224,13 +225,13 @@ def patient_signup():
 @app.route('/patient_dashboard')
 def patient_dashboard():
     patient_id = session.get('patient_id')
-    
+
     if patient_id is None:
         return "Patient ID not found in session"
-    
+
     db = get_db()
     cursor = db.cursor()
-    
+
     try:
         cursor.execute("""
             SELECT p.name, p.age, p.gender, p.scan_path, p.result, p.detailed_rep, p.prescription, d.name AS doctor_name, d.hospital
@@ -240,15 +241,15 @@ def patient_dashboard():
             WHERE p.id = %s
         """, (patient_id,))
         patient = cursor.fetchone()
-        
+
         if patient is None:
             return "Patient not found in the database"
-        
+
         return render_template('patient_dashboard.html', patient=patient)
-    
+
     except Exception as e:
         return f"An error occurred: {str(e)}"
-    
+
     finally:
         cursor.close()
         db.close()
@@ -277,7 +278,6 @@ def health_tracker():
     if request.method == 'POST':
         all_medicines_taken = True  # Flag to track if all medicines are taken
         for data in patient_data:
-            
             prescription = data[1]
             medicines = prescription.split(', ')
             for medicine in medicines:
@@ -385,21 +385,28 @@ def analyse():
     if request.method == 'POST':
         image_file = request.files['image_file']
         image_filename = image_file.filename
-        image_path = os.path.join('uploads', image_filename)
-        image_file.save(os.path.join(app.config['UPLOAD_FOLDER'], image_filename))
+        image_path = os.path.join(app.config['UPLOAD_FOLDER'], image_filename)
+        image_file.save(image_path)
+
+        # Code to preview the uploaded image
         preview_url = url_for('uploaded_file', filename=image_filename)
+
+        # Your existing code for processing the image
         model_path = r'Pneumonia_model.keras'
         detector = PneumoniaDetector(model_path, os.path.join(app.config['UPLOAD_FOLDER'], image_filename))
         prediction = detector.predict()
+
         generated_report = generate(os.path.join(app.config['UPLOAD_FOLDER'], image_filename))
         generated_report=generated_report.replace('**','')
         report_path = os.path.join(app.config['UPLOAD_FOLDER'], f"{image_filename.split('.')[0]}_report.txt")
         with open(report_path, "w") as f:
             f.write(generated_report)
-        return render_template('analyse.html', prediction=prediction, generated_report=generated_report, image_path=image_path)
+
+        return render_template('analyse.html',prediction=prediction, generated_report=generated_report, image_path=image_path, preview_url=preview_url)
+
     return render_template('analyse.html')
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+   return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 if __name__ == '__main__':
     app.run(debug=True)
