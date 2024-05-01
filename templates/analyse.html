@@ -51,7 +51,22 @@
                 </div>
             </div>
         {% endif %}
-        
+        {% if preview_url %}
+    <div style="background-color: black; padding: 20px; border-radius: 10px; display: inline-block;">
+        <div style="display: inline-block;">
+            <h1 style="color: white; font-family: 'Arial', sans-serif; font-size: 24px;">UPLOADED SCAN</h1>
+            <img id="previewImage" src="{{ preview_url }}" style="max-width: 100%; height: auto;" alt="Preview Image" onload="resizeContainer()">
+        </div>
+    </div>
+{% endif %}
+
+<script>
+    function resizeContainer() {
+        var image = document.getElementById('previewImage');
+        var container = image.parentNode.parentNode;
+        container.style.width = image.width + 'px';
+    }
+</script>
 
 </body>
 </html>
