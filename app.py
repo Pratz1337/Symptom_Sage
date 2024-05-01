@@ -396,7 +396,7 @@ def analyse():
         report_path = os.path.join(app.config['UPLOAD_FOLDER'], f"{image_filename.split('.')[0]}_report.txt")
         with open(report_path, "w") as f:
             f.write(generated_report)
-        return render_template('analyse.html', image_path=image_path, preview_url=preview_url)
+        return render_template('analyse.html', prediction=prediction, generated_report=generated_report, image_path=image_path)
     return render_template('analyse.html')
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
