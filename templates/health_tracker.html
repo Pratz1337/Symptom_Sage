@@ -3,28 +3,53 @@
 <head>
   <title>Health Tracker</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Poppins', sans-serif;
       margin: 20px;
+      background-color: #f8f9fa;
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.5em;
+      margin-bottom: 30px;
+      color: #6c63ff;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      margin-top: 20px;
+      color: #6c63ff;
+      text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
     }
 
     table {
       border-collapse: collapse;
       width: 100%;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
     }
 
     th, td {
-      padding: 8px;
+      padding: 12px 15px;
       text-align: left;
       border-bottom: 1px solid #ddd;
     }
 
     th {
-      background-color: #f2f2f2;
+      background-color: #6c63ff;
+      color: #fff;
+      text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
     }
 
-    h1, h2, h3 {
+    h3 {
       margin-top: 20px;
+      color: #6c63ff;
+      text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
     }
 
     form {
@@ -38,12 +63,18 @@
 
     input[type="submit"] {
       margin-top: 10px;
-      background-color: #4CAF50;
-      color: white;
-      padding: 10px 20px;
+      background-color: #6c63ff;
+      color: #fff;
+      padding: 12px 24px;
       border: none;
-      border-radius: 3px;
+      border-radius: 6px;
       cursor: pointer;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    input[type="submit"]:hover {
+      background-color: #5a54d6;
     }
 
     p {
@@ -53,11 +84,14 @@
     .bold-p {
       font-weight: bold;
     }
+
     .scan-image {
       max-width: 300px;
+      border-radius: 4px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     }
   </style>
-   <link rel="icon" href="/static/css/image.png">
+  <link rel="icon" href="/static/css/image.png">
 </head>
 <body>
   <h1>Health Tracker</h1>
@@ -85,9 +119,7 @@
   <h2>Medication Tracker</h2>
   <form method="post">
     {% for data in patient_data %}
-      <h3>
-        Check the box once you have taken the particular medicine
-      </h3>
+      <h3>Check the box once you have taken the particular medicine</h3>
       <p>Prescription:</p>
       <div>
         {% for medicine in data[1].split(', ') %}
