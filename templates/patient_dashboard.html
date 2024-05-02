@@ -3,59 +3,83 @@
 <head>
   <title>Patient Dashboard</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Poppins', sans-serif;
       margin: 20px;
+      background-color: #f8f9fa;
+      color: #333;
     }
 
     h1 {
       text-align: center;
-      font-size: 2em;
-      margin-bottom: 20px;
+      font-size: 2.5em;
+      margin-bottom: 30px;
+      color: #6c63ff;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
     }
 
     h2 {
-      margin-top: 15px;
+      margin-top: 20px;
+      color: #6c63ff;
+      text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
     }
 
     .patient-info {
-      border: 1px solid #ddd;
-      padding: 10px;
-      margin-bottom: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-bottom: 30px;
     }
 
     .patient-info p {
-      margin-bottom: 5px;
+      margin-bottom: 10px;
     }
 
     table {
       border-collapse: collapse;
       width: 100%;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
     }
 
     th, td {
-      padding: 8px;
+      padding: 12px 15px;
       text-align: left;
       border-bottom: 1px solid #ddd;
     }
 
     th {
-      background-color: #f2f2f2;
+      background-color: #6c63ff;
+      color: #fff;
+      text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
     }
-    button{
-        margin-top: 10px;
-      background-color: #4CAF50;
-      color: white;
-      padding: 10px 20px;
+
+    button {
+      margin-top: 10px;
+      background-color: #6c63ff;
+      color: #fff;
+      padding: 12px 24px;
       border: none;
-      border-radius: 3px;
+      border-radius: 6px;
       cursor: pointer;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     }
+
+    button:hover {
+      background-color: #5a54d6;
+    }
+
     .scan-image {
       max-width: 300px;
-    }
+      border-radius: 4px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); }
   </style>
-   <link rel="icon" href="/static/css/image.png">
+  <link rel="icon" href="/static/css/image.png">
 </head>
 <body>
   <h1>Patient Dashboard</h1>
