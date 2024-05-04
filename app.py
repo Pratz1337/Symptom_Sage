@@ -31,7 +31,15 @@ def get_db():
 def create_appointments_table():
     db = get_db()
     cursor = db.cursor()
-    cursor.execute("CREATE TABLE IF NOT EXISTS appointments (id INT AUTO_INCREMENT PRIMARY KEY, patient_id INT,doctor_id INT, appointment_datetime DATETIME, status VARCHAR(255))")
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS appointments (
+        id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        patient_id INT,
+        doctor_id INT,
+        appointment_datetime DATETIME,
+        status VARCHAR(255)
+    )
+""")
     db.commit()
     cursor.close()
     db.close()
