@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request, session,send_from_directory
+from flask import Flask, render_template, redirect, url_for, request, session,send_from_directory, flash
 import mysql.connector
 import os
 from werkzeug.utils import secure_filename
@@ -23,11 +23,18 @@ def get_db():
     db = mysql.connector.connect(
         host="localhost",
         user="root",
-        password="kamal2005",
+        password="enter_ur_passwd",
         database="symptomsage"
     )
     return db
 
+def create_appointments_table():
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute("CREATE TABLE IF NOT EXISTS appointments (id INT AUTO_INCREMENT PRIMARY KEY, patient_id INT,doctor_id INT, appointment_datetime DATETIME, status VARCHAR(255))")
+    db.commit()
+    cursor.close()
+    db.close()
 
 with app.app_context():
     db = get_db()
@@ -183,10 +190,18 @@ def doctor_dashboard():
         if name not in patient_reports:
             patient_reports[name] = []
         patient_reports[name].append(patient)
-    
+
+    cursor.execute("""
+        SELECT a.id, p.name, a.appointment_datetime
+        FROM appointments a
+        JOIN patients p ON a.patient_id = p.id
+        WHERE a.doctor_id = %s AND a.status = 'accepted'
+        ORDER BY a.appointment_datetime
+    """, (doctor_id,))
+    upcoming_appointments = cursor.fetchall()
     cursor.close()
     db.close()
-    return render_template('doctor_dashboard.html', patient_reports=patient_reports)
+    return render_template('doctor_dashboard.html', patient_reports=patient_reports, upcoming_appointments=upcoming_appointments)
 
 @app.route('/patient_login', methods=['GET', 'POST'])
 def patient_login():
@@ -241,11 +256,20 @@ def patient_dashboard():
             WHERE p.id = %s
         """, (patient_id,))
         patient = cursor.fetchone()
+        cursor.execute("""
+            SELECT a.id, a.appointment_datetime, a.status
+            FROM appointments a
+            WHERE a.patient_id = %s
+            ORDER BY a.appointment_datetime
+        """, (patient_id,))
+        appointments = cursor.fetchall()
+
 
         if patient is None:
             return "Patient not found in the database"
+            
 
-        return render_template('patient_dashboard.html', patient=patient)
+        return render_template('patient_dashboard.html', patient=patient, appointments=appointments)
 
     except Exception as e:
         return f"An error occurred: {str(e)}"
@@ -253,6 +277,65 @@ def patient_dashboard():
     finally:
         cursor.close()
         db.close()
+
+
+@app.route('/fix_appointment', methods=['GET', 'POST'])
+def fix_appointment():
+    create_appointments_table() # Ensure appointments table exists
+    if request.method == 'POST':
+        appointment_datetime = request.form['appointment_datetime']
+        db = get_db()
+        cursor = db.cursor()
+        try:
+            cursor.execute("SELECT doctor_id FROM doctor_patient_map WHERE patient_id = %s", (session['patient_id'],))
+            doc = cursor.fetchall()
+            for i in doc:
+                for j in i:
+                    doc =int(j) 
+        except Exception as e:
+            print("An error occurred:", e)
+        cursor.execute("INSERT INTO appointments (patient_id, doctor_id, appointment_datetime, status) VALUES (%s, %s,%s, 'pending')", (session['patient_id'], doc, appointment_datetime))
+        db.commit()
+        cursor.close()
+        db.close()
+        return redirect(url_for('patient_dashboard'))
+    return render_template('fix_appointment.html')
+
+@app.route('/doctor_appointments')
+def doctor_appointments():
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute("SELECT a.id, p.name, a.appointment_datetime FROM appointments a JOIN patients p ON a.patient_id = p.id WHERE a.doctor_id = %s AND a.status = 'pending'", (session['doctor_id'],))
+    appointments = cursor.fetchall()
+    cursor.close()
+    db.close()
+    return render_template('doctor_appointments.html', appointments=appointments)
+
+
+
+
+# Route for accepting an appointment by doctor
+
+@app.route('/accept_appointment/<int:appointment_id>')
+def accept_appointment(appointment_id):
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute("UPDATE appointments SET status = 'accepted' WHERE id = %s", (appointment_id,))
+    db.commit()
+    cursor.close()
+    db.close()
+    return redirect(url_for('doctor_appointments'))
+
+# Route for rejecting an appointment by doctor
+@app.route('/reject_appointment/<int:appointment_id>')
+def reject_appointment(appointment_id):
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute("UPDATE appointments SET status = 'rejected' WHERE id = %s", (appointment_id,))
+    db.commit()
+    cursor.close()
+    db.close()
+    return redirect(url_for('doctor_appointments'))
 @app.route('/health_tracker', methods=['GET', 'POST'])
 def health_tracker():
     patient_id = session['patient_id']
@@ -402,7 +485,7 @@ def analyse():
         with open(report_path, "w") as f:
             f.write(generated_report)
 
-        return render_template('analyse.html',prediction=prediction, generated_report=generated_report, image_path=image_path, preview_url=preview_url)
+        return render_template('analyse.html',image_path=image_path, preview_url=preview_url)
 
     return render_template('analyse.html')
 @app.route('/uploads/<filename>')
