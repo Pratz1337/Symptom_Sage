@@ -66,21 +66,20 @@
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     }
 
-    #add, #remove {
-      background-color: #6c63ff;
-      color: #fff;
-      padding: 12px 24px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-      margin-right: 10px;
-    }
+    #appointments,#remove,#add {
+            background-color: #6c63ff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 12px 24px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
 
-    #add:hover, #remove:hover {
-      background-color: #5a54d6;
-    }
+        button:hover {
+            background-color: #5a54d6;
+        }
   </style>
   <link rel="icon" href="/static/css/image.png">
 </head>
@@ -142,8 +141,22 @@
   {% else %}
     <p>No patients found.</p>
   {% endif %}
+  <h2>Upcoming Appointments</h2>
+  <table>
+    <tr>
+      <th>Patient Name</th>
+      <th>Appointment Date and Time</th>
+    </tr>
+    {% for appointment in upcoming_appointments %}
+    <tr>
+      <td>{{ appointment[1] }}</td>
+      <td>{{ appointment[2] }}</td>
+    </tr>
+    {% endfor %}
+  </table>
   <br>
   <a href="{{ url_for('add_patient') }}"><button type="button" id="add">Add Patient Details</button></a>
   <a href="{{ url_for('remove_patient') }}"><button type="button" id="remove">Remove Patient</button></a>
+  <a href="{{ url_for('doctor_appointments') }}"><button type="button" id="appointments">Appointments</button></a>
 </body>
 </html>
