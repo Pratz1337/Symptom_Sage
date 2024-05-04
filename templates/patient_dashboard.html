@@ -77,7 +77,21 @@
     .scan-image {
       max-width: 300px;
       border-radius: 4px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); }
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Conditional styling based on status */
+    tr.accepted {
+      background-color: #c8e6c9; /* Pale green */
+    }
+
+    tr.rejected {
+      background-color: #ffcdd2; /* Pale red */
+    }
+
+    tr.pending {
+      background-color: #fff9c4; /* Pale yellow */
+    }
   </style>
   <link rel="icon" href="/static/css/image.png">
 </head>
@@ -137,6 +151,20 @@
       </td>
     </tr>
   </table>
+  <h2>Appointments</h2>
+  <table>
+    <tr>
+      <th>Appointment Date and Time</th>
+      <th>Status</th>
+    </tr>
+    {% for appointment in appointments %}
+    <tr class="{% if appointment[2] == 'accepted' %}accepted{% elif appointment[2] == 'rejected' %}rejected{% else %}pending{% endif %}">
+      <td>{{ appointment[1] }}</td>
+      <td>{{ appointment[2] }}</td>
+    </tr>
+    {% endfor %}
+  </table>
   <a href="{{ url_for('health_tracker') }}"><button type="button">Health Tracker</button></a>
+  <a href="{{ url_for('fix_appointment') }}"><button type="button">Fix Appointment</button></a>
 </body>
 </html>
