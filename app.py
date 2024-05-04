@@ -485,7 +485,7 @@ def analyse():
         with open(report_path, "w") as f:
             f.write(generated_report)
 
-        return render_template('analyse.html',image_path=image_path, preview_url=preview_url)
+        return render_template('analyse.html',prediction=prediction, generated_report=generated_report,image_path=image_path, preview_url=preview_url)
 
     return render_template('analyse.html')
 @app.route('/uploads/<filename>')
