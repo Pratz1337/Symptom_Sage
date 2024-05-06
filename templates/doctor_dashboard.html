@@ -65,7 +65,21 @@
       border-radius: 4px;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     }
+    .logout-btn {
+      margin-top: 20px;
+      background-color: #ff5c5c;
+      color: #fff;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
 
+    .logout-btn:hover {
+      background-color: #e64c4c;
+    }
     #appointments,#remove,#add {
             background-color: #6c63ff;
             color: #fff;
@@ -80,10 +94,23 @@
         button:hover {
             background-color: #5a54d6;
         }
+
+    #header {
+      display: flex;
+      justify-content: flex-end;
+      padding: 10px 20px;
+    }
+
+    .logout-btn {
+      margin: 0;
+    }
   </style>
   <link rel="icon" href="/static/css/image.png">
 </head>
 <body>
+  <div id="header">
+    <a href="{{ url_for('logout') }}"><button type="button" class="logout-btn">Logout</button></a>
+  </div>
   <h1>Doctor Dashboard</h1>
   <h2>Patients</h2>
 
