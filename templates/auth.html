@@ -59,12 +59,36 @@
       transform: scale(1.02); 
       background-color: #3e8e41; 
     }
+    .alert {
+      padding: 15px;
+      margin-bottom: 20px;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .alert-success {
+      color: #155724;
+      background-color: #d4edda;
+      border-color: #c3e6cb;
+    }
   </style>
    <link rel="icon" href="/static/css/image.png">
 </head>
 <body>
   <div id="particles-js"></div>
-  <h1>Welcome</h1>  <div class="button-container">
+  <h1>Welcome</h1>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <div class="button-container">
     <a href="{{ url_for('patient_login') }}">
       <button type="button">Patient Login</button>
     </a>
