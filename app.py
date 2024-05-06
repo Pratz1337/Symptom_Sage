@@ -471,6 +471,11 @@ def remove_patient():
         return redirect(url_for('doctor_dashboard'))
 
     return render_template('remove_patient.html')
+@app.route('/logout')
+def logout():
+    session.clear()
+    flash('You have been logged out.', 'success')
+    return redirect(url_for('auth'))
 @app.route('/analyse', methods=['GET', 'POST'])
 def analyse():
     if request.method == 'POST':
