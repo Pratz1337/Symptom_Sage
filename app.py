@@ -86,7 +86,7 @@ class PneumoniaDetector:
             return "NORMAL"
 
 def generate(image_path):
-    vertexai.init(project="airy-gate-418807", location="asia-southeast1")
+    vertexai.init(project="####", location="###")
     
     with open(image_path, "rb") as f:
         image = Image.open(f)
@@ -94,7 +94,7 @@ def generate(image_path):
         image.save(image_data, format="PNG")
         image_data = image_data.getvalue()
 
-    model = GenerativeModel("gemini-1.0-pro-vision-001")
+    model = GenerativeModel("#########")
     
     image_part = Part.from_data(
         mime_type="image/png",
