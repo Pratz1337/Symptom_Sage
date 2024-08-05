@@ -42,18 +42,14 @@ To get started with Symptom_Sage, follow these steps:
     pip install -r requirements.txt
     ```
 
-4. Set up the database:
-    ```bash
-    # Ensure MongoDB is running
-    mongod --config /usr/local/etc/mongod.conf
-    ```
 
-5. Start the Flask app:
+
+4. Start the Flask app:
     ```bash
     flask run
     ```
 
-6. Open your browser and navigate to:
+5. Open your browser and navigate to:
     ```
     http://127.0.0.1:5000
     ```
