@@ -18,11 +18,10 @@ To get started with Symptom_Sage, follow these steps:
 
 ### Prerequisites
 
-- Python 3.8+
+- Python 3.10+
 - Flask
-- TensorFlow or PyTorch
-- OpenCV
-- MongoDB (for database)
+- TensorFlow 
+- MySQL (for database)
 
 ### Setup
 
